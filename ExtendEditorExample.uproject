@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.22 StitchEngine",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "ExtendEditorExample",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
