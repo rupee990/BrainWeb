@@ -1,12 +1,13 @@
-#include "Graph/AssetTypeActions_BrainWeb.h"
+#include "Graph/Editor/Commands/AssetTypeActions_BrainWeb.h"
 //#include "GenericGraphEditorPCH.h"
 #include "EdGraphUtilities.h"
-#include "Graph/Editor/EdNode_BrainWebNode.h"
-#include "Graph/Editor/EdNode_BrainWebEdge.h"
-#include "Graph/Editor/SEdNode_BrainWebNode.h"
-#include "Graph/Editor/SEdNode_BrainWebEdge.h"
-#include "Graph/Editor/BrainWebEditorStyle.h"
+#include "Graph/Editor/Nodes/BaseNode/EdNode_BrainWebNode.h"
+#include "Graph/Editor/Nodes/BaseNode/SEdNode_BrainWebNode.h"
+
+#include "Graph/Editor/Nodes/EndNode/SEdNode_BrainWebNode_End.h"
+#include "Graph/Editor/Style/BrainWebEditorStyle.h"
 #include "IBrainWebEditor.h"
+#include "Graph/Editor/Nodes/EndNode/EdNode_BrainWebNode_End.h"
 
 DEFINE_LOG_CATEGORY(BrainWebEditor)
 
@@ -16,14 +17,16 @@ class FGraphPanelNodeFactory_BrainWeb : public FGraphPanelNodeFactory
 {
     virtual TSharedPtr<class SGraphNode> CreateNode(UEdGraphNode* Node) const override
     {
-        if (UEdNode_BrainWebNode* EdNode_GraphNode = Cast<UEdNode_BrainWebNode>(Node))
+        
+        if(UEdNode_BrainWebNode_End* EdNode_GraphNodeEnd = Cast<UEdNode_BrainWebNode_End>(Node))
         {
-            return SNew(SEdNode_BrainWebNode, EdNode_GraphNode);
+            return SNew(SEdNode_BrainWebNode_End, EdNode_GraphNodeEnd);
         }
-        else if (UEdNode_BrainWebEdge* EdNode_Edge = Cast<UEdNode_BrainWebEdge>(Node))
+        
+        if(UEdNode_BrainWebNode* BaseNode = Cast<UEdNode_BrainWebNode>(Node) )
         {
-            return SNew(SEdNode_BrainWebEdge, EdNode_Edge);
-        }
+            return SNew(SEdNode_BrainWebNode, BaseNode);
+        }  
         return nullptr;
     }
 };

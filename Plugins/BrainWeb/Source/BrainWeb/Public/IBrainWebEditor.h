@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ModuleManager.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(BrainWebEditor, Log, All);
 

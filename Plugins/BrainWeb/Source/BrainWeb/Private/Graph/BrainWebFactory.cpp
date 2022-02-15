@@ -1,5 +1,5 @@
 #include "BrainWebFactory.h"
-#include "BrainWebGraph.h"
+#include "Graph/BrainWebGraph.h"
 
 #define LOCTEXT_NAMESPACE "BrainWebGraphFactory"
 
