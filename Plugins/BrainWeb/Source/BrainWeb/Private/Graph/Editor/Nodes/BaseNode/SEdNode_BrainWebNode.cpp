@@ -220,9 +220,32 @@ void SEdNode_BrainWebNode::CreatePinWidgets()
 {
 	UEdNode_BrainWebNode* StateNode = CastChecked<UEdNode_BrainWebNode>(GraphNode);
 
-	for (int32 PinIdx = 0; PinIdx < StateNode->Pins.Num(); PinIdx++)
+	TArray<UEdGraphPin*> Result;
+	TArray<UEdGraphPin*> Copy = StateNode->Pins;
+
+	Result.Init(nullptr, StateNode->Pins.Num());
+
+	for(int32 i = 0; i < Copy.Num(); i++)
 	{
-		UEdGraphPin* MyPin = StateNode->Pins[PinIdx];
+		FString PinName = Copy[i]->PinName.ToString();
+		if(PinName.Contains("In"))
+		{
+			Result[i] = Copy[i];
+			Copy.RemoveAt(i);
+			i--;
+		}
+		else if(PinName.Contains("Out"))
+		{
+			int32 Idx = PinName.Len() > 3 ? FCString::Atoi(*PinName.RightChop(4)) : StateNode->Pins.Num() > 1 ? 1 : 0;
+			Result[Idx] = Copy[i];
+			Copy.RemoveAt(i);
+			i--;
+		}
+	}
+	
+	for (int32 PinIdx = 0; PinIdx < Result.Num(); PinIdx++)
+	{
+		UEdGraphPin* MyPin = Result[PinIdx];
 		if (!MyPin->bHidden)
 		{
 			TSharedPtr<SGraphPin> NewPin = SNew(SGenericGraphPin, MyPin);
@@ -244,7 +267,7 @@ void SEdNode_BrainWebNode::AddPin(const TSharedRef<SGraphPin>& PinToAdd)
       [
           PinToAdd
       ];
-		OutputPins.Add(PinToAdd);
+	OutputPins.Add(PinToAdd);
 	}
 	else
 	{

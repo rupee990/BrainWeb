@@ -292,15 +292,7 @@ TSharedRef<SGraphEditor> FAssetEditor_BrainWeb::CreateViewportWidget()
 
 void FAssetEditor_BrainWeb::BindCommands()
 {
-	//ToolkitCommands->MapAction(FEditorCommands_BrainWeb::Get().GraphSettings,
-	//	FExecuteAction::CreateSP(this, &FAssetEditor_BrainWeb::GraphSettings),
-	//	FCanExecuteAction::CreateSP(this, &FAssetEditor_BrainWeb::CanGraphSettings)
-	//);
-
-	//ToolkitCommands->MapAction(FEditorCommands_BrainWeb::Get().AutoArrange,
-	//	FExecuteAction::CreateSP(this, &FAssetEditor_BrainWeb::AutoArrange),
-	//	FCanExecuteAction::CreateSP(this, &FAssetEditor_BrainWeb::CanAutoArrange)
-	//);
+	
 }
 
 void FAssetEditor_BrainWeb::CreateEdGraph()
@@ -328,15 +320,6 @@ void FAssetEditor_BrainWeb::CreateCommandList()
 	// Can't use CreateSP here because derived editor are already implementing TSharedFromThis<FAssetEditorToolkit>
 	// however it should be safe, since commands are being used only within this editor
 	// if it ever crashes, this function will have to go away and be reimplemented in each derived class
-
-	//GraphEditorCommands->MapAction(FEditorCommands_BrainWeb::Get().GraphSettings,
-	//	FExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::GraphSettings),
-	//	FCanExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::CanGraphSettings));
-
-	//GraphEditorCommands->MapAction(FEditorCommands_BrainWeb::Get().AutoArrange,
-	//	FExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::AutoArrange),
-	//	FCanExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::CanAutoArrange));
-
 	GraphEditorCommands->MapAction(FGenericCommands::Get().SelectAll,
 		FExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::SelectAllNodes),
 		FCanExecuteAction::CreateRaw(this, &FAssetEditor_BrainWeb::CanSelectAllNodes)
@@ -392,11 +375,6 @@ FGraphPanelSelectionSet FAssetEditor_BrainWeb::GetSelectedNodes() const
 
 void FAssetEditor_BrainWeb::RebuildGenericGraph()
 {
-	//if (EditingGraph == nullptr)
-	//{
-	//	LOG_WARNING(TEXT("FGenericGraphAssetEditor::RebuildGenericGraph EditingGraph is nullptr"));
-	//	return;
-	//}
 
 	UEdGraph_BrainWeb* EdGraph = Cast<UEdGraph_BrainWeb>(EditingGraph->EdGraph);
 	check(EdGraph != nullptr);

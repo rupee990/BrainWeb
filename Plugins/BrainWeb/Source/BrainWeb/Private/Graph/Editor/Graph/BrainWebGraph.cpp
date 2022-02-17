@@ -54,11 +54,6 @@ void UBrainWebGraph::Print(bool ToConsole /*= true*/, bool ToScreen /*= true*/)
 
 			FString Message = FString::Printf(TEXT("%s, Level %d"), *Node->GetDescription().ToString(), Level);
 
-			//if (ToConsole)
-			//{
-			//	LOG_INFO(TEXT("%s"), *Message);
-			//}
-
 			if (ToScreen && GEngine != nullptr)
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, Message);
@@ -105,14 +100,14 @@ int UBrainWebGraph::GetLevelNum() const
 
 void UBrainWebGraph::GetNodesByLevel(int Level, TArray<UBrainWebNode*>& Nodes)
 {
-	int CurrLEvel = 0;
+	int CurrLevel = 0;
 	TArray<UBrainWebNode*> NextLevelNodes;
 
 	Nodes = RootNodes;
 
 	while (Nodes.Num() != 0)
 	{
-		if (CurrLEvel == Level)
+		if (CurrLevel == Level)
 			break;
 
 		for (int i = 0; i < Nodes.Num(); ++i)
@@ -128,7 +123,7 @@ void UBrainWebGraph::GetNodesByLevel(int Level, TArray<UBrainWebNode*>& Nodes)
 
 		Nodes = NextLevelNodes;
 		NextLevelNodes.Reset();
-		++CurrLEvel;
+		++CurrLevel;
 	}
 }
 

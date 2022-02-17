@@ -37,7 +37,9 @@ void UEdNode_BrainWebNode_Query::SetGenericGraphNode(UBrainWebNode* InNode)
 void UEdNode_BrainWebNode_Query::AllocateDefaultPins()
 {
 	//Create Default Input Pin
-	CreatePin(EGPD_Input, "Input", FName(), TEXT("In"));
+	FCreatePinParams Params;
+	Params.Index = 0;
+	CreatePin(EGPD_Input, "Input", FName(), TEXT("In"), Params);
 }
 
 void UEdNode_BrainWebNode_Query::GeneratePins()
@@ -45,8 +47,9 @@ void UEdNode_BrainWebNode_Query::GeneratePins()
 	//AllocateDefaultPins();
 	
 	UBrainWebNode_Query* QueryNode = Cast<UBrainWebNode_Query>(BrainWebNode);
-
-	if(QueryNode->Queries.Num() == 0)
+	int32 NewIndex = QueryNode->Queries.Num();
+	
+	if(NewIndex == 0)
 	{
 		Pins.Empty();
 		AllocateDefaultPins();
@@ -56,7 +59,7 @@ void UEdNode_BrainWebNode_Query::GeneratePins()
 	}
 	
 	// If We have Removed Output Pins
-	if(QueryNode->Queries.Num() < Pins.Num() - 1)
+	if(NewIndex < Pins.Num() - 1)
 	{
 		int32 difference = QueryNode->Queries.Num() - (Pins.Num() - 1);
 		int32 Index = Pins.Num() - 1;
@@ -67,12 +70,12 @@ void UEdNode_BrainWebNode_Query::GeneratePins()
 		}
 	}
 	// Else if we are adding Pins
-	else if(QueryNode->Queries.Num() > Pins.Num() - 1)
+	else if(NewIndex > Pins.Num() - 1)
 	{
-		UEdGraphPin* Last = Pins.Last();
-
-		FName PinName("Out_" + FString::FromInt(Pins.Num()));
-		CreatePin(EGPD_Output, "Outputs", FName(), PinName);
+		FName PinName("Out_" + FString::FromInt(NewIndex));
+		FCreatePinParams Params;
+		Params.Index = NewIndex;
+		CreatePin(EGPD_Output, "Outputs", FName(), PinName, Params);
 	}
 
 	SEdNode->UpdateGraphNode();

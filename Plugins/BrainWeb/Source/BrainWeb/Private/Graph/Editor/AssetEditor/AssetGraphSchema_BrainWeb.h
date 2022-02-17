@@ -30,7 +30,6 @@ public:
 UCLASS(MinimalAPI)
 class UAssetGraphSchema_BrainWeb : public UEdGraphSchema
 {
-
 	GENERATED_BODY()
 
 public:
@@ -42,8 +41,6 @@ public:
 
 	virtual void GetContextMenuActions(UToolMenu* Menu, UGraphNodeContextMenuContext* Context) const override;
 	
- 	//virtual void GetContextMenuActions(const UEdGraph* CurrentGraph, const UEdGraphNode* InGraphNode, const UEdGraphPin* InGraphPin, class FMenuBuilder* MenuBuilder, bool bIsDebugging) const override;
-
  	virtual const FPinConnectionResponse CanCreateConnection(const UEdGraphPin* A, const UEdGraphPin* B) const override;
 
 	virtual bool CreateAutomaticConversionNodeAndConnections(UEdGraphPin* A, UEdGraphPin* B) const override;

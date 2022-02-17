@@ -8,7 +8,9 @@ UEdNode_BrainWebNode_End::UEdNode_BrainWebNode_End()
 
 void UEdNode_BrainWebNode_End::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Input, "MultipleNodes", FName(), TEXT("In"));
+	FCreatePinParams Params;
+	Params.Index = 0;
+	CreatePin(EGPD_Input, "MultipleNodes", FName(), TEXT("In"), Params);
 }
 
 UEdGraphPin* UEdNode_BrainWebNode_End::GetInputPin() const

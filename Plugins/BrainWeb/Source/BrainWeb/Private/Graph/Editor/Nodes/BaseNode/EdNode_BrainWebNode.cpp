@@ -15,8 +15,11 @@ UEdNode_BrainWebNode::~UEdNode_BrainWebNode()
 
 void UEdNode_BrainWebNode::AllocateDefaultPins()
 {
-	CreatePin(EGPD_Input, "MultipleNodes", FName(), TEXT("In"));
-	CreatePin(EGPD_Output, "MultipleNodes", FName(), TEXT("Out"));
+	FCreatePinParams Params;
+	Params.Index = 0;
+	CreatePin(EGPD_Input, "MultipleNodes", FName(), TEXT("In"),Params);
+	Params.Index = 1;
+	CreatePin(EGPD_Output, "MultipleNodes", FName(), TEXT("Out"), Params);
 }
 
 UEdGraph_BrainWeb* UEdNode_BrainWebNode::GetGenericGraphEdGraph()

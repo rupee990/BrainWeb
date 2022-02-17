@@ -272,8 +272,8 @@ bool UAssetGraphSchema_BrainWeb::CreateAutomaticConversionNodeAndConnections(UEd
 
 	if (NodeA == nullptr || NodeB == nullptr)
 		return false;
-
-	NodeA->Modify();	
+	
+	NodeA->Modify();
 	A->Modify();
 	A->SetOwningNode(NodeA);
 	A->LinkedTo.Empty();
@@ -314,6 +314,17 @@ void UAssetGraphSchema_BrainWeb::BreakPinLinks(UEdGraphPin& TargetPin, bool bSen
 {
 	const FScopedTransaction Transaction(NSLOCTEXT("UnrealEd", "GraphEd_BreakPinLinks", "Break Pin Links"));
 
+	if(TargetPin.LinkedTo.Num() > 0)
+	{
+		for(int32 i = 0; i < TargetPin.LinkedTo.Num(); i++)
+		{
+			if(TargetPin.LinkedTo[i] == nullptr)
+			{
+				TargetPin.LinkedTo.RemoveAt(i);
+			}
+		}
+	}
+	
 	Super::BreakPinLinks(TargetPin, bSendsNodeNotifcation);
 }
 
@@ -376,10 +387,8 @@ bool UAssetGraphSchema_BrainWeb::TryCreateConnection(UEdGraphPin* a_A, UEdGraphP
 	{
 		return false;
 	}
-
-	bool bConnectionMade = UEdGraphSchema::TryCreateConnection(OutputA, InputB);
-
-	return true;
+			
+	return UEdGraphSchema::TryCreateConnection(OutputA, InputB);;
 
 }
 #pragma optimize("", on)
