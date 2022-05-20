@@ -141,20 +141,24 @@ void UBrainWebGraph::ClearGraph()
 	RootNodes.Empty();
 }
 
-UBrainWebNode* UBrainWebGraph::GetStartNodeByIndex(int32 ID)
+UBrainWebNode* UBrainWebGraph::GetStartNodeByIndex(const int32 ID, bool& bWasFound)
 {
 	for(int32 i = 0; i < AllNodes.Num(); i++)
 	{
 		if(UBrainWebNode_Start* Node = Cast <UBrainWebNode_Start>( AllNodes[i]))
 		{
-			return Node;
+			if(Node->SpeechIndex == ID)
+			{
+				bWasFound = true;
+				return Node;
+			}
 		}
 	}
-
+	
+	bWasFound = false;
 	return nullptr;
 }
 
-#pragma optimize("", off)
 void UBrainWebGraph::NextNode()
 {
 	if(CurrentNode == nullptr)
@@ -194,8 +198,6 @@ void UBrainWebGraph::SetNextNode(UBrainWebNode* NextNode)
 	}
 }
 
-#pragma optimize("", on)
-
 void UBrainWebGraph::OnNodeEnter_Implementation(UBrainWebNode* Node)
 {
 	OnNodeExecuteDelegate.Broadcast(Node, Node->StaticClass());
@@ -208,14 +210,18 @@ void UBrainWebGraph::OnNodeExit(UBrainWebNode* Node)
 
 void UBrainWebGraph::StartDialogue(int32 DialogueIndex)
 {
-	CurrentNode = GetStartNodeByIndex(DialogueIndex);
+	bool bWasFound = false;
+	CurrentNode = GetStartNodeByIndex(DialogueIndex, bWasFound);
 
-	if(UBrainWebNode_Start* StartNode = Cast<UBrainWebNode_Start>(CurrentNode))
+	if(bWasFound)
 	{
-		OnDialogStart(StartNode);
-		OnDialogueStartDelegate.Broadcast(StartNode);
+		if(UBrainWebNode_Start* StartNode = Cast<UBrainWebNode_Start>(CurrentNode))
+		{
+			OnDialogStart(StartNode);
+			OnDialogueStartDelegate.Broadcast(StartNode);
 
-		StartNode->Execute();
+			StartNode->Execute();
+		}
 	}
 }
 

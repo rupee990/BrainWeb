@@ -23,7 +23,6 @@ UEdNode_BrainWebNode_Query::~UEdNode_BrainWebNode_Query()
 
 }
 
-#pragma optimize("", off)
 void UEdNode_BrainWebNode_Query::SetGenericGraphNode(UBrainWebNode* InNode)
 {
 	Super::SetGenericGraphNode(InNode);
@@ -80,8 +79,6 @@ void UEdNode_BrainWebNode_Query::GeneratePins()
 
 	SEdNode->UpdateGraphNode();
 }
-
-#pragma optimize("", on)
 
 UEdGraphPin* UEdNode_BrainWebNode_Query::GetOutputPinFromName(const FName& PinName)
 {

@@ -376,7 +376,6 @@ void UAssetGraphSchema_BrainWeb::ForceVisualizationCacheClear() const
 }
 
 #if WITH_EDITOR
-#pragma optimize("", off)
 bool UAssetGraphSchema_BrainWeb::TryCreateConnection(UEdGraphPin* a_A, UEdGraphPin* a_B) const
 {
 	UEdNode_BrainWebNode* NodeA = Cast<UEdNode_BrainWebNode>(a_A->GetOwningNode());
@@ -391,7 +390,6 @@ bool UAssetGraphSchema_BrainWeb::TryCreateConnection(UEdGraphPin* a_A, UEdGraphP
 	return UEdGraphSchema::TryCreateConnection(OutputA, InputB);;
 
 }
-#pragma optimize("", on)
 #endif
 
 #undef LOCTEXT_NAMESPACE

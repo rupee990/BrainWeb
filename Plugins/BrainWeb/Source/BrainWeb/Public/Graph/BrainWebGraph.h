@@ -62,7 +62,8 @@ public:
 	bool bCanRenameNode;
 #endif
 
-	UBrainWebNode* GetStartNodeByIndex(int32 ID);
+	UFUNCTION(BlueprintPure, Category = "BrainWebGraph")
+	UBrainWebNode* GetStartNodeByIndex(int32 ID, bool& bWasFound);
 
 	UFUNCTION(BlueprintCallable)
 	void NextNode();
