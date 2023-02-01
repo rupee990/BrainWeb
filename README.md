@@ -1,5 +1,5 @@
 # BrainWeb
-A Basic Dialogue system with a custom Editor, used a IGAD presentation.
+A Basic Dialogue system with a custom Editor, used for a IGAD presentation.
 
 This is meant as an introduction to SLATE, plugins and Modules, this is in no way a completed tool ready for use.
 
